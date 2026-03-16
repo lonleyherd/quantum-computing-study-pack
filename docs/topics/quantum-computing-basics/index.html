@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Computing Basics</title>
+  <style>
+    :root {
+      --bg: #f4efe4;
+      --paper: #fffaf0;
+      --ink: #14213d;
+      --muted: #5c677d;
+      --accent: #0f766e;
+      --accent-2: #f59e0b;
+      --line: #d6c7a7;
+      --card: #fffdf8;
+      --shadow: 0 18px 40px rgba(20, 33, 61, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 22%),
+        linear-gradient(180deg, #f8f2e7 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    .shell {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255, 250, 240, 0.95), rgba(255, 253, 248, 0.92));
+      border: 1px solid rgba(214, 199, 167, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 118, 110, 0.18), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      padding: 40px 28px 36px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .lede {
+      max-width: 62ch;
+      font-size: 1.08rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    .nav {
+      margin-bottom: 16px;
+    }
+
+    .nav a,
+    .sources a {
+      color: var(--accent);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(214, 199, 167, 0.95);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .concepts {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .concept {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(252, 247, 238, 0.9));
+      border: 1px solid var(--line);
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--ink);
+      color: #fffaf0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      border-left: 4px solid var(--accent);
+      padding: 4px 0 4px 16px;
+    }
+
+    .qa {
+      margin-top: 12px;
+    }
+
+    details {
+      border-top: 1px solid var(--line);
+      padding: 14px 0;
+    }
+
+    details:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    summary::marker {
+      color: var(--accent);
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid.two,
+      .concepts {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner,
+      .card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="nav"><a href="../../">Back to Study Pack Library</a></div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Study Pack</p>
+        <h1>Quantum Computing Basics</h1>
+        <p class="lede">A visual, beginner-friendly guide to the core ideas behind qubits, superposition, entanglement, and interference. Read this page top to bottom in about 10 minutes.</p>
+        <div class="pill-row">
+          <span class="pill">Level: Beginner</span>
+          <span class="pill">Format: Visual overview</span>
+          <span class="pill">Best for: First pass intuition</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>The Big Picture</h2>
+        <p>Classical computers use bits that are either <code>0</code> or <code>1</code>. Quantum computers use qubits, which are described by quantum states and can behave in ways that do not fit ordinary everyday logic.</p>
+        <p>The practical goal is not to replace normal computers. It is to solve a narrower class of problems where quantum effects can help shape the odds of getting useful answers.</p>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Three Core Ideas</h2>
+        <div class="concepts">
+          <section class="concept">
+            <h3>Superposition</h3>
+            <p>A qubit can be in a combination of <code>0</code> and <code>1</code> before measurement. You can think of it as carrying richer state information than a simple on-or-off switch.</p>
+          </section>
+          <section class="concept">
+            <h3>Entanglement</h3>
+            <p>Two or more qubits can become linked so that their states must be described together. This is one reason quantum systems can be surprisingly powerful.</p>
+          </section>
+          <section class="concept">
+            <h3>Interference</h3>
+            <p>Quantum algorithms are designed so useful outcomes reinforce each other while less useful outcomes cancel out. This is the real engine behind quantum advantage.</p>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>How A Quantum Program Works</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>Prepare</h3>
+              <p>Start qubits in a known state, often all zeros.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>Apply Gates</h3>
+              <p>Use operations like <code>H</code>, <code>X</code>, and <code>CNOT</code> to rotate or entangle qubits.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>Create Interference</h3>
+              <p>Arrange the circuit so promising answers become more likely.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>Measure</h3>
+              <p>Convert the quantum state into an ordinary classical output.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Worked Example</h2>
+        <p>Start with one qubit in <code>|0&gt;</code>.</p>
+        <p>Apply a Hadamard gate, usually written as <code>H</code>.</p>
+        <p>The qubit moves into an even superposition of <code>|0&gt;</code> and <code>|1&gt;</code>.</p>
+        <p>If you measure immediately, you will get <code>0</code> about half the time and <code>1</code> about half the time.</p>
+        <p>The bigger story comes later: several gates in sequence can shape probabilities so the useful result appears more often.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>Common Myth To Avoid</h2>
+        <p>Quantum computing is often described as “trying every answer at once.” That is catchy, but incomplete.</p>
+        <p>The deeper truth is that quantum algorithms manipulate amplitudes. The art is making good answers stand out at measurement time through interference.</p>
+      </article>
+
+      <article class="card">
+        <h2>Why People Care</h2>
+        <p>Quantum computers may become valuable for simulating molecules and materials, parts of optimization, and some cryptography-related problems.</p>
+        <p>They are still early-stage machines today: noisy, small, and error-prone compared with mature classical systems.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>Quick Self-Test</h2>
+        <div class="qa">
+          <details>
+            <summary>What is the main difference between a bit and a qubit?</summary>
+            <p>A bit is either <code>0</code> or <code>1</code>. A qubit can be in a combination of both before measurement.</p>
+          </details>
+          <details>
+            <summary>What is superposition in simple terms?</summary>
+            <p>It means a qubit can carry amplitudes for both <code>0</code> and <code>1</code> before it is measured.</p>
+          </details>
+          <details>
+            <summary>What does entanglement mean?</summary>
+            <p>It means qubits become linked so their states must be described together rather than independently.</p>
+          </details>
+          <details>
+            <summary>Why is interference so important?</summary>
+            <p>It is how quantum algorithms boost useful outcomes and suppress unhelpful ones.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Study Path</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Session 1</h3>
+            <p>Read this page once for intuition and vocabulary.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 2</h3>
+            <p>Learn the single-qubit gates: <code>X</code>, <code>Z</code>, and <code>H</code>.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 3</h3>
+            <p>Study the Bloch sphere and see how one qubit state is visualized.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 4</h3>
+            <p>Move to Bell states and basic entanglement examples.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 5</h3>
+            <p>Try a first algorithm like Deutsch-Jozsa or Grover's algorithm.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card sources">
+        <h2>Recommended Sources</h2>
+        <p><a href="https://qiskit.qotlabs.org/learning/courses/quantum-business-foundations/quantum-computing-fundamentals">IBM Quantum fundamentals</a> gives a solid first overview.</p>
+        <p><a href="https://learn.microsoft.com/en-us/azure/quantum/concepts-the-qubit">Microsoft Learn: The qubit</a> is useful for the state-vector mental model.</p>
+        <p><a href="https://qiskit.qotlabs.org/learning/modules/quantum-mechanics/superposition-with-qiskit">IBM: Superposition with Qiskit</a> is a good next stop for visualization.</p>
+        <p><a href="https://quantum.country/">Quantum Country</a> is excellent for deeper follow-up and long-term retention.</p>
+      </article>
+    </section>
+
+    <p class="footer">This topic now lives on its own page, so future study packs can be added without replacing it.</p>
+  </main>
+</body>
+</html>
