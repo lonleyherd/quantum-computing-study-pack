@@ -658,11 +658,18 @@
 
       <article class="card">
         <h2>How They Fit Together</h2>
-        <p>When you ask a question, the text is first split into <strong>tokens</strong>. A token is just a small text unit the model can process.</p>
-        <p>Each token then gets an <strong>embedding</strong>. An embedding is a special kind of <strong>vector</strong>, meaning a list of numbers that represents the token.</p>
-        <p>The model then uses matrix multiplication to create new views of those vectors. Those new views are called <strong>projections</strong>.</p>
-        <p>The model uses those projections to make <strong>comparisons</strong> between tokens. That creates <strong>attention</strong>, which tells the model what parts of the sentence matter most.</p>
-        <p>After that, a <strong>feed-forward layer</strong> remixes each token again. Finally, the model makes a <strong>prediction</strong> for the next token, adds it to the text, and repeats.</p>
+        <p><strong>1. Tokenization: what happens.</strong> Your sentence is split into small text pieces called tokens.</p>
+        <p><strong>1. Tokenization: how it happens.</strong> The tokenizer uses a fixed vocabulary learned ahead of time. It matches chunks of text like words, word-parts, punctuation, or symbols and converts them into token IDs.</p>
+        <p><strong>2. Embedding: what happens.</strong> Each token ID is turned into an embedding, which is a vector of numbers.</p>
+        <p><strong>2. Embedding: how it happens.</strong> The model stores a big embedding table. Looking up a token means selecting that token's learned row from the table, which becomes the starting vector for that token.</p>
+        <p><strong>3. Projection: what happens.</strong> The model creates new versions of each token vector.</p>
+        <p><strong>3. Projection: how it happens.</strong> It multiplies the token vector by learned weight matrices. Each matrix creates a different projected view of the same token, useful for different jobs inside attention.</p>
+        <p><strong>4. Comparison and attention: what happens.</strong> The model checks which tokens should influence each other most.</p>
+        <p><strong>4. Comparison and attention: how it happens.</strong> It computes similarity scores between projected token vectors. Those scores are normalized into weights, and those weights decide how much information each token should gather from the others.</p>
+        <p><strong>5. Feed-forward layer: what happens.</strong> Each token is remixed again after attention.</p>
+        <p><strong>5. Feed-forward layer: how it happens.</strong> The model applies another set of learned matrix multiplications plus a non-linear activation. This lets the model build richer patterns than matrix multiplication alone could express.</p>
+        <p><strong>6. Prediction: what happens.</strong> The model chooses the next token to generate.</p>
+        <p><strong>6. Prediction: how it happens.</strong> The final token state is multiplied by another weight matrix to produce scores over the whole vocabulary. The model picks a likely next token, appends it, and repeats the full process for the growing sequence.</p>
       </article>
     </section>
 
