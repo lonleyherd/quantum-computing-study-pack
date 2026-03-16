@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix Multiplication, Neural Networks, and LLMs</title>
+  <style>
+    :root {
+      --bg: #f3ede5;
+      --paper: #fffaf4;
+      --ink: #15253d;
+      --muted: #5e6a7d;
+      --accent: #0b7285;
+      --accent-2: #ca6702;
+      --line: #d8c8ae;
+      --card: #fffdf8;
+      --shadow: 0 18px 40px rgba(21, 37, 61, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(11, 114, 133, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(202, 103, 2, 0.14), transparent 24%),
+        linear-gradient(180deg, #f9f3ea 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    .shell {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .nav {
+      margin-bottom: 16px;
+    }
+
+    .nav a,
+    .sources a {
+      color: var(--accent);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255, 250, 244, 0.95), rgba(255, 253, 248, 0.92));
+      border: 1px solid rgba(216, 200, 174, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -90px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(11, 114, 133, 0.18), transparent 66%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      padding: 40px 28px 36px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    code {
+      background: rgba(21, 37, 61, 0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .lede {
+      max-width: 66ch;
+      font-size: 1.08rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(216, 200, 174, 0.95);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .concepts {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .concept {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(251, 246, 238, 0.9));
+      border: 1px solid var(--line);
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--ink);
+      color: #fffaf0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      border-left: 4px solid var(--accent);
+      padding: 4px 0 4px 16px;
+    }
+
+    details {
+      border-top: 1px solid var(--line);
+      padding: 14px 0;
+    }
+
+    details:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    summary::marker {
+      color: var(--accent);
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid.two,
+      .concepts {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner,
+      .card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="nav"><a href="../../">Back to Study Pack Library</a></div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Study Pack</p>
+        <h1>Matrix Multiplication to Neural Networks to LLMs</h1>
+        <p class="lede">A beginner-friendly bridge from basic matrix multiplication to how artificial neural networks compute, and finally how large language models use the same idea at massive scale.</p>
+        <div class="pill-row">
+          <span class="pill">Level: Beginner</span>
+          <span class="pill">Format: Concept ladder</span>
+          <span class="pill">Best for: ML intuition</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>The Big Picture</h2>
+        <p>Matrix multiplication is one of the main computational building blocks in modern machine learning. Neural networks use it to combine inputs with learned weights. Large language models, or LLMs, are stacked neural networks that perform huge numbers of these matrix multiplications to transform text into predictions.</p>
+        <p>If you understand matrix multiplication as “mixing numbers according to learned recipes,” you already have the foundation for understanding why neural networks and LLMs are so compute-heavy.</p>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Three Core Ideas</h2>
+        <div class="concepts">
+          <section class="concept">
+            <h3>Matrix Multiplication</h3>
+            <p>A matrix is a grid of numbers. Multiplying matrices is a structured way of combining rows and columns to produce new values.</p>
+          </section>
+          <section class="concept">
+            <h3>Neural Network Layers</h3>
+            <p>A layer takes an input vector, multiplies it by a weight matrix, adds a bias, and then applies a non-linear activation.</p>
+          </section>
+          <section class="concept">
+            <h3>LLM Computation</h3>
+            <p>LLMs repeat this idea across many layers and many tokens. Attention and feed-forward blocks are both driven by matrix multiplications.</p>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>How Matrix Multiplication Works</h2>
+        <p>Suppose you have a vector of inputs:</p>
+        <p><code>[x1, x2]</code></p>
+        <p>And a matrix of weights:</p>
+        <p><code>[[w11, w12], [w21, w22]]</code></p>
+        <p>Multiplying them creates a new vector where each output is a weighted combination of the inputs.</p>
+        <p>That is the key machine-learning idea: each output is built by mixing input features using learned numbers.</p>
+      </article>
+
+      <article class="card">
+        <h2>Worked Example</h2>
+        <p>Input vector:</p>
+        <p><code>[2, 3]</code></p>
+        <p>Weight matrix:</p>
+        <p><code>[[1, 4], [5, 2]]</code></p>
+        <p>Output:</p>
+        <p><code>[2*1 + 3*5, 2*4 + 3*2] = [17, 14]</code></p>
+        <p>The network has turned two inputs into two new learned combinations. A real model does this with far larger vectors and matrices.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>From Matrices To Neural Networks</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>Input</h3>
+              <p>Turn raw data into numbers, like pixel values or token embeddings.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>Linear Mix</h3>
+              <p>Multiply by a weight matrix so the model can combine features.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>Nonlinearity</h3>
+              <p>Apply an activation function so the network can learn more than simple straight-line relationships.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>Repeat Across Layers</h3>
+              <p>Each layer builds richer features from the one before it.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Why Neural Networks Need It</h2>
+        <p>A neural network learns by adjusting its weight matrices during training. Those matrices are the learned memory of the model.</p>
+        <p>When you hear that a model has millions or billions of parameters, many of those parameters live inside these matrices.</p>
+        <p>Inference is then mostly repeated matrix multiplication using the learned weights.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>How LLMs Use The Same Idea</h2>
+        <p>LLMs first convert each token into an embedding, which is just a vector of numbers. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
+        <p>Two major places this happens:</p>
+        <p><strong>Attention:</strong> the model creates query, key, and value vectors using matrix multiplication, then compares tokens to decide what information matters.</p>
+        <p><strong>Feed-forward layers:</strong> after attention, more matrix multiplications transform each token representation again.</p>
+        <p>So even though LLMs feel linguistic, their internal computation is mostly large-scale linear algebra.</p>
+      </article>
+
+      <article class="card">
+        <h2>Why LLMs Need So Much Hardware</h2>
+        <p>Each token passes through many layers, and each layer uses large matrices. That means a single response can require enormous numbers of multiply-and-add operations.</p>
+        <p>This is why GPUs are so important: they are good at doing many matrix operations in parallel.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>Common Misunderstanding</h2>
+        <p>People sometimes imagine LLMs as mostly “stored text.” A better intuition is that they are giant systems of learned weights. The knowledge is not stored like a dictionary entry. It is distributed across many numerical relationships inside weight matrices.</p>
+      </article>
+
+      <article class="card">
+        <h2>Study Path</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Session 1</h3>
+            <p>Practice multiplying a small vector by a small matrix.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 2</h3>
+            <p>Learn why a linear layer is written as <code>y = Wx + b</code>.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 3</h3>
+            <p>Study activations like ReLU so you see why pure matrix multiplication is not enough.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Session 4</h3>
+            <p>Read a simple introduction to transformers and identify where the matrix multiplications happen.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Quick Self-Test</h2>
+        <details>
+          <summary>Why is matrix multiplication useful in neural networks?</summary>
+          <p>Because it lets the model combine many input features into new learned combinations using weights.</p>
+        </details>
+        <details>
+          <summary>What is a layer doing in simple terms?</summary>
+          <p>It takes an input vector, multiplies it by learned weights, adds a bias, and applies an activation.</p>
+        </details>
+        <details>
+          <summary>Where do LLMs use matrix multiplication?</summary>
+          <p>In embedding projections, attention projections, and feed-forward layers throughout the transformer.</p>
+        </details>
+        <details>
+          <summary>Why are GPUs good for LLMs?</summary>
+          <p>Because GPUs are built to run many parallel multiply-and-add operations efficiently.</p>
+        </details>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card sources">
+        <h2>Good Next Resources</h2>
+        <p><a href="https://www.3blue1brown.com/topics/linear-algebra">3Blue1Brown linear algebra</a> is excellent for visual intuition around vectors, matrices, and transformations.</p>
+        <p><a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown neural networks</a> helps connect the math to network layers and learning.</p>
+        <p><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a> is a strong visual bridge from neural networks to transformers and LLM-style architectures.</p>
+      </article>
+    </section>
+
+    <p class="footer">Once matrix multiplication feels natural, transformer architecture becomes much easier to understand.</p>
+  </main>
+</body>
+</html>
