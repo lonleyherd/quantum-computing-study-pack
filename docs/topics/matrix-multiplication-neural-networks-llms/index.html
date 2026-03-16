@@ -202,6 +202,54 @@
       margin-top: 18px;
     }
 
+    .pipeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .pipeline-step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.84);
+      position: relative;
+    }
+
+    .pipeline-step::after {
+      content: "";
+      position: absolute;
+      left: 31px;
+      bottom: -15px;
+      width: 2px;
+      height: 16px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+    }
+
+    .pipeline-step:last-child::after {
+      display: none;
+    }
+
+    .pipeline-num {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--ink);
+      color: #fffaf0;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .pipeline-body p {
+      margin-bottom: 8px;
+    }
+
     .flow-step {
       display: grid;
       grid-template-columns: 56px 1fr;
@@ -658,18 +706,56 @@
 
       <article class="card">
         <h2>How They Fit Together</h2>
-        <p><strong>1. Tokenization: what happens.</strong> Your sentence is split into small text pieces called tokens.</p>
-        <p><strong>1. Tokenization: how it happens.</strong> The tokenizer uses a fixed vocabulary learned ahead of time. It matches chunks of text like words, word-parts, punctuation, or symbols and converts them into token IDs.</p>
-        <p><strong>2. Embedding: what happens.</strong> Each token ID is turned into an embedding, which is a vector of numbers.</p>
-        <p><strong>2. Embedding: how it happens.</strong> The model stores a big embedding table. Looking up a token means selecting that token's learned row from the table, which becomes the starting vector for that token.</p>
-        <p><strong>3. Projection: what happens.</strong> The model creates new versions of each token vector.</p>
-        <p><strong>3. Projection: how it happens.</strong> It multiplies the token vector by learned weight matrices. Each matrix creates a different projected view of the same token, useful for different jobs inside attention.</p>
-        <p><strong>4. Comparison and attention: what happens.</strong> The model checks which tokens should influence each other most.</p>
-        <p><strong>4. Comparison and attention: how it happens.</strong> It computes similarity scores between projected token vectors. Those scores are normalized into weights, and those weights decide how much information each token should gather from the others.</p>
-        <p><strong>5. Feed-forward layer: what happens.</strong> Each token is remixed again after attention.</p>
-        <p><strong>5. Feed-forward layer: how it happens.</strong> The model applies another set of learned matrix multiplications plus a non-linear activation. This lets the model build richer patterns than matrix multiplication alone could express.</p>
-        <p><strong>6. Prediction: what happens.</strong> The model chooses the next token to generate.</p>
-        <p><strong>6. Prediction: how it happens.</strong> The final token state is multiplied by another weight matrix to produce scores over the whole vocabulary. The model picks a likely next token, appends it, and repeats the full process for the growing sequence.</p>
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="pipeline-num">1</div>
+            <div class="pipeline-body">
+              <h3>Tokenization</h3>
+              <p><strong>What:</strong> Your sentence is split into small text pieces called tokens.</p>
+              <p><strong>How:</strong> A tokenizer uses a fixed vocabulary and matches chunks like words, word-parts, punctuation, or symbols, then converts them into token IDs.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">2</div>
+            <div class="pipeline-body">
+              <h3>Embedding Lookup</h3>
+              <p><strong>What:</strong> Each token ID becomes an embedding, which is a vector of numbers.</p>
+              <p><strong>How:</strong> The model stores a large embedding table. Looking up a token means selecting that token's learned row, which becomes the starting vector for the token.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">3</div>
+            <div class="pipeline-body">
+              <h3>Projection</h3>
+              <p><strong>What:</strong> The model creates new versions of each token vector.</p>
+              <p><strong>How:</strong> It multiplies the token vector by learned weight matrices. Each matrix creates a projected view useful for a different role inside attention.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">4</div>
+            <div class="pipeline-body">
+              <h3>Comparison And Attention</h3>
+              <p><strong>What:</strong> The model decides which tokens should influence each other most.</p>
+              <p><strong>How:</strong> It computes similarity scores between projected token vectors, normalizes those scores into weights, and uses the weights to gather more information from the most relevant tokens.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">5</div>
+            <div class="pipeline-body">
+              <h3>Feed-Forward Layer</h3>
+              <p><strong>What:</strong> Each token is remixed again after attention.</p>
+              <p><strong>How:</strong> The model applies another learned matrix transformation plus a non-linear activation, allowing it to build richer patterns than matrix multiplication alone.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">6</div>
+            <div class="pipeline-body">
+              <h3>Prediction</h3>
+              <p><strong>What:</strong> The model chooses the next token to generate.</p>
+              <p><strong>How:</strong> The final token state is multiplied by another weight matrix to produce scores over the vocabulary. The model selects a likely next token, appends it, and repeats the full process.</p>
+            </div>
+          </div>
+        </div>
       </article>
     </section>
 
