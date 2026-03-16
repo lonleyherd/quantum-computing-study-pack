@@ -139,6 +139,38 @@
       margin-top: 24px;
     }
 
+    .tour-rail {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .tour-stop {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tour-stop::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0.35);
+      transform-origin: left;
+      animation: grow 5s ease-in-out infinite;
+    }
+
+    .tour-stop:nth-child(2)::after { animation-delay: 0.4s; }
+    .tour-stop:nth-child(3)::after { animation-delay: 0.8s; }
+    .tour-stop:nth-child(4)::after { animation-delay: 1.2s; }
+    .tour-stop:nth-child(5)::after { animation-delay: 1.6s; }
+
     .grid.two {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -203,6 +235,262 @@
       padding: 4px 0 4px 16px;
     }
 
+    .visual-card {
+      overflow: hidden;
+    }
+
+    .matrix-demo {
+      display: grid;
+      grid-template-columns: 0.9fr 0.2fr 1fr 0.2fr 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .matrix-box {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .matrix-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .matrix-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .matrix-grid.cols-1 {
+      grid-template-columns: 1fr;
+    }
+
+    .cell {
+      padding: 14px 10px;
+      text-align: center;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff, #f6efe6);
+      border: 1px solid rgba(216, 200, 174, 0.9);
+      font-weight: 700;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .cell:nth-child(2) { animation-delay: 0.35s; }
+    .cell:nth-child(3) { animation-delay: 0.7s; }
+    .cell:nth-child(4) { animation-delay: 1.05s; }
+
+    .operator {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .mix-caption {
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .real-life {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .kitchen-board {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .recipe-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f7f0e7);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .attention-stage {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .attention-box {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    .beam {
+      height: 8px;
+      margin-top: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(11, 114, 133, 0.15), rgba(11, 114, 133, 0.85), rgba(202, 103, 2, 0.3));
+      background-size: 200% 100%;
+      animation: slide 3.8s linear infinite;
+    }
+
+    .storyboard {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .frame {
+      position: relative;
+      padding: 18px 18px 18px 64px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+      overflow: hidden;
+    }
+
+    .frame::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fffaf0;
+      font-weight: 700;
+    }
+
+    .token-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .token {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      animation: drift 5.2s ease-in-out infinite;
+    }
+
+    .token:nth-child(2) { animation-delay: 0.4s; }
+    .token:nth-child(3) { animation-delay: 0.8s; }
+    .token:nth-child(4) { animation-delay: 1.2s; }
+    .token:nth-child(5) { animation-delay: 1.6s; }
+
+    .response-flow {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .cinema {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-top: 16px;
+      align-items: stretch;
+    }
+
+    .screen {
+      position: relative;
+      min-height: 300px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(247, 240, 230, 0.95));
+      overflow: hidden;
+    }
+
+    .screen-stage {
+      position: absolute;
+      inset: 18px;
+      opacity: 0;
+      animation: stageSwap 16s infinite;
+    }
+
+    .screen-stage:nth-child(2) { animation-delay: 4s; }
+    .screen-stage:nth-child(3) { animation-delay: 8s; }
+    .screen-stage:nth-child(4) { animation-delay: 12s; }
+
+    .screen-stage h3 {
+      margin-bottom: 10px;
+    }
+
+    .tiny-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tiny-cell {
+      padding: 10px 8px;
+      text-align: center;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 700;
+    }
+
+    .side-notes {
+      display: grid;
+      gap: 12px;
+    }
+
+    .note {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .response-step {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .response-tag {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #fffaf0;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .tiny {
+      font-size: 0.94rem;
+    }
+
     details {
       border-top: 1px solid var(--line);
       padding: 14px 0;
@@ -229,15 +517,54 @@
       font-size: 0.95rem;
     }
 
+    @keyframes pulse {
+      0%, 100% { transform: translateY(0); box-shadow: none; }
+      50% { transform: translateY(-3px); box-shadow: 0 10px 18px rgba(11, 114, 133, 0.12); }
+    }
+
+    @keyframes slide {
+      0% { background-position: 200% 0; }
+      100% { background-position: -20% 0; }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes grow {
+      0%, 100% { transform: scaleX(0.35); }
+      50% { transform: scaleX(1); }
+    }
+
+    @keyframes stageSwap {
+      0%, 18% { opacity: 1; transform: translateY(0); }
+      24%, 100% { opacity: 0; transform: translateY(8px); }
+    }
+
     @media (max-width: 860px) {
       .grid.two,
-      .concepts {
+      .concepts,
+      .matrix-demo,
+      .real-life,
+      .attention-stage,
+      .tour-rail,
+      .cinema,
+      .tiny-grid {
         grid-template-columns: 1fr;
       }
 
       .hero-inner,
       .card {
         padding: 24px 20px;
+      }
+
+      .operator {
+        transform: rotate(90deg);
+      }
+
+      .response-step {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -253,7 +580,7 @@
         <p class="lede">A beginner-friendly bridge from basic matrix multiplication to how artificial neural networks compute, and finally how large language models use the same idea at massive scale.</p>
         <div class="pill-row">
           <span class="pill">Level: Beginner</span>
-          <span class="pill">Format: Concept ladder</span>
+          <span class="pill">Format: Visual concept ladder</span>
           <span class="pill">Best for: ML intuition</span>
         </div>
       </div>
@@ -263,7 +590,7 @@
       <article class="card">
         <h2>The Big Picture</h2>
         <p>Matrix multiplication is one of the main computational building blocks in modern machine learning. Neural networks use it to combine inputs with learned weights. Large language models, or LLMs, are stacked neural networks that perform huge numbers of these matrix multiplications to transform text into predictions.</p>
-        <p>If you understand matrix multiplication as “mixing numbers according to learned recipes,” you already have the foundation for understanding why neural networks and LLMs are so compute-heavy.</p>
+        <p>If you understand matrix multiplication as "mixing numbers according to learned recipes," you already have the foundation for understanding why neural networks and LLMs are so compute-heavy.</p>
       </article>
     </section>
 
@@ -283,6 +610,93 @@
             <h3>LLM Computation</h3>
             <p>LLMs repeat this idea across many layers and many tokens. Attention and feed-forward blocks are both driven by matrix multiplications.</p>
           </section>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Guided Tour</h2>
+        <p>This page now follows a visual narrative: start with a tiny matrix, see it become a neural layer, then watch the same pattern scale into a transformer answering a question.</p>
+        <div class="tour-rail">
+          <div class="tour-stop">
+            <h3>1. Inputs</h3>
+            <p class="tiny">Numbers or token vectors enter the system.</p>
+          </div>
+          <div class="tour-stop">
+            <h3>2. Weights</h3>
+            <p class="tiny">Matrices encode learned recipes.</p>
+          </div>
+          <div class="tour-stop">
+            <h3>3. Mixing</h3>
+            <p class="tiny">Matrix multiplication creates new features.</p>
+          </div>
+          <div class="tour-stop">
+            <h3>4. Attention</h3>
+            <p class="tiny">Tokens compare with other tokens.</p>
+          </div>
+          <div class="tour-stop">
+            <h3>5. Response</h3>
+            <p class="tiny">The model predicts one token at a time.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card visual-card">
+        <h2>Visual 1: Matrix Multiplication As A Mixing Machine</h2>
+        <p>Read left to right. The input numbers flow into a weight matrix. Each output is created by mixing the inputs with a different recipe.</p>
+        <div class="matrix-demo">
+          <div class="matrix-box">
+            <h3>Input Vector</h3>
+            <div class="matrix-grid cols-1">
+              <div class="cell">spice = 2</div>
+              <div class="cell">sweet = 3</div>
+            </div>
+          </div>
+          <div class="operator">x</div>
+          <div class="matrix-box">
+            <h3>Weight Matrix</h3>
+            <div class="matrix-grid cols-2">
+              <div class="cell">1</div>
+              <div class="cell">4</div>
+              <div class="cell">5</div>
+              <div class="cell">2</div>
+            </div>
+          </div>
+          <div class="operator">=</div>
+          <div class="matrix-box">
+            <h3>Output Vector</h3>
+            <div class="matrix-grid cols-1">
+              <div class="cell">17</div>
+              <div class="cell">14</div>
+            </div>
+            <p class="mix-caption">Each output is a different weighted blend of the same original inputs.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card visual-card">
+        <h2>Real-Life Analogy: A Kitchen Recipe Mixer</h2>
+        <p>Imagine a chef tasting two input ingredients, then using recipes to create several sauces. The ingredients stay the same, but each sauce combines them differently.</p>
+        <div class="real-life">
+          <div class="kitchen-board">
+            <div class="recipe-row">
+              <div class="badge">Input 1<br>Spice</div>
+              <div class="badge">Input 2<br>Sweetness</div>
+              <div class="badge">Chef recipes<br>weights</div>
+            </div>
+            <div class="recipe-row">
+              <div class="badge">2 scoops</div>
+              <div class="badge">3 scoops</div>
+              <div class="badge">Sauce A, Sauce B</div>
+            </div>
+          </div>
+          <div>
+            <p>The chef does not memorize full meals. The chef learns how strongly each ingredient should influence each output.</p>
+            <p>That is what a weight matrix does inside a neural network: it learns how much each input feature should matter for each output feature.</p>
+          </div>
         </div>
       </article>
     </section>
@@ -354,6 +768,55 @@
     </section>
 
     <section class="grid two">
+      <article class="card visual-card">
+        <h2>Visual 2: What A Transformer Layer Does</h2>
+        <p>One token vector enters a transformer block. Matrix multiplication first creates query, key, and value versions, then later transforms the result again in the feed-forward network.</p>
+        <div class="attention-stage">
+          <div class="attention-box">
+            <h3>Input Embedding</h3>
+            <p class="tiny">A token like "Paris" becomes a vector of numbers.</p>
+            <div class="beam"></div>
+          </div>
+          <div class="attention-box">
+            <h3>Q, K, V Projections</h3>
+            <p class="tiny">Three matrix multiplies create query, key, and value vectors.</p>
+            <div class="beam"></div>
+          </div>
+          <div class="attention-box">
+            <h3>New Token State</h3>
+            <p class="tiny">The token is updated using attention plus another feed-forward matrix mix.</p>
+            <div class="beam"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card visual-card">
+        <h2>Visual 3: Tokens Looking At Each Other</h2>
+        <p>Attention lets each token decide which other tokens deserve focus. The same linear algebra machinery makes those comparisons possible.</p>
+        <div class="storyboard">
+          <div class="frame" data-step="1">
+            <h3>User asks a question</h3>
+            <div class="token-strip">
+              <span class="token">Why</span>
+              <span class="token">is</span>
+              <span class="token">the</span>
+              <span class="token">sky</span>
+              <span class="token">blue?</span>
+            </div>
+          </div>
+          <div class="frame" data-step="2">
+            <h3>Each token becomes a vector</h3>
+            <p>The model turns words into embeddings so math can happen on them.</p>
+          </div>
+          <div class="frame" data-step="3">
+            <h3>Attention scores are computed</h3>
+            <p>Matrix multiplication helps compare tokens and decide which ones are relevant to each other.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two">
       <article class="card">
         <h2>How LLMs Use The Same Idea</h2>
         <p>LLMs first convert each token into an embedding, which is just a vector of numbers. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
@@ -370,10 +833,110 @@
       </article>
     </section>
 
+    <section class="grid">
+      <article class="card visual-card">
+        <h2>Mini Animated Walkthrough: How An LLM Generates A Response</h2>
+        <p>Use this as a mental movie. Think of the model as repeatedly turning text into vectors, mixing those vectors with matrices, and then choosing the next token.</p>
+        <div class="cinema">
+          <div class="screen">
+            <div class="screen-stage">
+              <h3>Scene A: Tokenize the question</h3>
+              <div class="token-strip">
+                <span class="token">Why</span>
+                <span class="token">do</span>
+                <span class="token">planes</span>
+                <span class="token">fly</span>
+                <span class="token">?</span>
+              </div>
+            </div>
+            <div class="screen-stage">
+              <h3>Scene B: Turn tokens into vectors</h3>
+              <div class="tiny-grid">
+                <div class="tiny-cell">0.8</div>
+                <div class="tiny-cell">-0.1</div>
+                <div class="tiny-cell">0.4</div>
+                <div class="tiny-cell">1.2</div>
+                <div class="tiny-cell">0.3</div>
+                <div class="tiny-cell">0.9</div>
+                <div class="tiny-cell">-0.5</div>
+                <div class="tiny-cell">0.2</div>
+              </div>
+            </div>
+            <div class="screen-stage">
+              <h3>Scene C: Attention highlights context</h3>
+              <div class="beam"></div>
+              <div class="beam"></div>
+              <p class="tiny">The model computes which earlier tokens matter most for the current one.</p>
+            </div>
+            <div class="screen-stage">
+              <h3>Scene D: Predict the next word</h3>
+              <div class="token-strip">
+                <span class="token">because</span>
+                <span class="token">their</span>
+                <span class="token">wings</span>
+                <span class="token">...</span>
+              </div>
+            </div>
+          </div>
+          <div class="side-notes">
+            <div class="note">
+              <h3>What stays constant</h3>
+              <p>The core operation is still matrix multiplication. The model just performs it many times at many sizes.</p>
+            </div>
+            <div class="note">
+              <h3>What changes</h3>
+              <p>The vectors get richer after every layer, because attention and feed-forward blocks keep remixing the information.</p>
+            </div>
+            <div class="note">
+              <h3>Why this helps</h3>
+              <p>Each next-token prediction gets to use context built by many rounds of matrix-based transformation.</p>
+            </div>
+          </div>
+        </div>
+        <div class="response-flow">
+          <div class="response-step">
+            <div class="response-tag">Step 1</div>
+            <div>
+              <h3>Your question becomes tokens</h3>
+              <p>For a prompt like "Why do airplanes fly?", the model splits the text into tokens. Each token becomes a vector so the transformer can process it numerically.</p>
+            </div>
+          </div>
+          <div class="response-step">
+            <div class="response-tag">Step 2</div>
+            <div>
+              <h3>Embeddings are projected by matrices</h3>
+              <p>Matrix multiplication turns those token vectors into new versions used for attention. This is where the model starts asking: which words should pay attention to which other words?</p>
+            </div>
+          </div>
+          <div class="response-step">
+            <div class="response-tag">Step 3</div>
+            <div>
+              <h3>Attention builds context</h3>
+              <p>The token for "fly" may look toward "airplanes" more strongly than toward "do". Those relationships are computed through projections and comparisons built from matrix operations.</p>
+            </div>
+          </div>
+          <div class="response-step">
+            <div class="response-tag">Step 4</div>
+            <div>
+              <h3>Feed-forward layers remix the meaning</h3>
+              <p>After attention, more matrix multiplications transform each token representation into something richer and more useful for prediction.</p>
+            </div>
+          </div>
+          <div class="response-step">
+            <div class="response-tag">Step 5</div>
+            <div>
+              <h3>The model predicts the next token</h3>
+              <p>At the end of the stack, the model produces scores over possible next tokens. It chooses one, appends it to the sequence, and repeats the whole process for the next token.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
     <section class="grid two">
       <article class="card">
         <h2>Common Misunderstanding</h2>
-        <p>People sometimes imagine LLMs as mostly “stored text.” A better intuition is that they are giant systems of learned weights. The knowledge is not stored like a dictionary entry. It is distributed across many numerical relationships inside weight matrices.</p>
+        <p>People sometimes imagine LLMs as mostly "stored text." A better intuition is that they are giant systems of learned weights. The knowledge is not stored like a dictionary entry. It is distributed across many numerical relationships inside weight matrices.</p>
       </article>
 
       <article class="card">
