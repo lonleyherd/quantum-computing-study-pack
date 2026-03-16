@@ -646,6 +646,7 @@
     <section class="grid two">
       <article class="card">
         <h2>Plain-English Vocabulary</h2>
+        <p><strong>Token:</strong> a small chunk of text the model reads, such as a word, part of a word, punctuation mark, or symbol.</p>
         <p><strong>Vector:</strong> an ordered list of numbers. In machine learning, a vector is a compact numerical description of something.</p>
         <p><strong>Embedding:</strong> a word turned into a list of numbers so the model can work with it mathematically.</p>
         <p><strong>Projection:</strong> multiplying a vector by a matrix to create a new version of that vector.</p>
@@ -657,7 +658,8 @@
 
       <article class="card">
         <h2>How They Fit Together</h2>
-        <p>When you ask a question, each token first gets an <strong>embedding</strong>. An embedding is a special kind of <strong>vector</strong>, meaning a list of numbers that represents the token.</p>
+        <p>When you ask a question, the text is first split into <strong>tokens</strong>. A token is just a small text unit the model can process.</p>
+        <p>Each token then gets an <strong>embedding</strong>. An embedding is a special kind of <strong>vector</strong>, meaning a list of numbers that represents the token.</p>
         <p>The model then uses matrix multiplication to create new views of those vectors. Those new views are called <strong>projections</strong>.</p>
         <p>The model uses those projections to make <strong>comparisons</strong> between tokens. That creates <strong>attention</strong>, which tells the model what parts of the sentence matter most.</p>
         <p>After that, a <strong>feed-forward layer</strong> remixes each token again. Finally, the model makes a <strong>prediction</strong> for the next token, adds it to the text, and repeats.</p>
@@ -840,7 +842,7 @@
     <section class="grid two">
       <article class="card">
         <h2>How LLMs Use The Same Idea</h2>
-        <p>LLMs first convert each token into an embedding, which is just a vector of numbers. You can think of a vector as the model's numeric handle for that token. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
+        <p>LLMs first break text into tokens. Each token is then converted into an embedding, which is just a vector of numbers. You can think of a vector as the model's numeric handle for that token. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
         <p>Two major places this happens:</p>
         <p><strong>Attention:</strong> the model creates projected versions of token embeddings, then compares tokens to decide what information matters.</p>
         <p><strong>Feed-forward layers:</strong> after attention, more matrix multiplications transform each token representation again so it carries richer meaning into the next layer.</p>
