@@ -646,6 +646,7 @@
     <section class="grid two">
       <article class="card">
         <h2>Plain-English Vocabulary</h2>
+        <p><strong>Vector:</strong> an ordered list of numbers. In machine learning, a vector is a compact numerical description of something.</p>
         <p><strong>Embedding:</strong> a word turned into a list of numbers so the model can work with it mathematically.</p>
         <p><strong>Projection:</strong> multiplying a vector by a matrix to create a new version of that vector.</p>
         <p><strong>Comparison:</strong> checking how strongly one token should relate to another token.</p>
@@ -656,7 +657,8 @@
 
       <article class="card">
         <h2>How They Fit Together</h2>
-        <p>When you ask a question, each token first gets an <strong>embedding</strong>. The model then uses matrix multiplication to create new views of those embeddings. Those new views are called <strong>projections</strong>.</p>
+        <p>When you ask a question, each token first gets an <strong>embedding</strong>. An embedding is a special kind of <strong>vector</strong>, meaning a list of numbers that represents the token.</p>
+        <p>The model then uses matrix multiplication to create new views of those vectors. Those new views are called <strong>projections</strong>.</p>
         <p>The model uses those projections to make <strong>comparisons</strong> between tokens. That creates <strong>attention</strong>, which tells the model what parts of the sentence matter most.</p>
         <p>After that, a <strong>feed-forward layer</strong> remixes each token again. Finally, the model makes a <strong>prediction</strong> for the next token, adds it to the text, and repeats.</p>
       </article>
@@ -789,7 +791,7 @@
     <section class="grid two">
       <article class="card visual-card">
         <h2>Visual 2: What A Transformer Layer Does</h2>
-        <p>One token vector enters a transformer block. Matrix multiplication first creates new projected versions of that token, then attention uses those versions to compare tokens, and finally the feed-forward layer remixes the result again.</p>
+        <p>One token vector enters a transformer block. A vector is just a list of numbers describing that token. Matrix multiplication first creates new projected versions of that token, then attention uses those versions to compare tokens, and finally the feed-forward layer remixes the result again.</p>
         <div class="attention-stage">
           <div class="attention-box">
             <h3>Input Embedding</h3>
@@ -838,7 +840,7 @@
     <section class="grid two">
       <article class="card">
         <h2>How LLMs Use The Same Idea</h2>
-        <p>LLMs first convert each token into an embedding, which is just a vector of numbers. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
+        <p>LLMs first convert each token into an embedding, which is just a vector of numbers. You can think of a vector as the model's numeric handle for that token. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
         <p>Two major places this happens:</p>
         <p><strong>Attention:</strong> the model creates projected versions of token embeddings, then compares tokens to decide what information matters.</p>
         <p><strong>Feed-forward layers:</strong> after attention, more matrix multiplications transform each token representation again so it carries richer meaning into the next layer.</p>
@@ -916,15 +918,15 @@
           <div class="response-step">
             <div class="response-tag">Step 1</div>
             <div>
-              <h3>Your question becomes tokens and embeddings</h3>
-              <p>For a prompt like "Why do airplanes fly?", the model splits the text into tokens. Each token then becomes an embedding, which is just a list of numbers representing that token in a learned way.</p>
+              <h3>Your question becomes tokens and vectors</h3>
+              <p>For a prompt like "Why do airplanes fly?", the model splits the text into tokens. Each token then becomes an embedding, which is a vector: a list of numbers representing that token in a learned way.</p>
             </div>
           </div>
           <div class="response-step">
             <div class="response-tag">Step 2</div>
             <div>
-              <h3>Embeddings are projected</h3>
-              <p>Matrix multiplication turns those embeddings into new versions. A projection just means "a matrix-made view of the same token" that helps with the next job.</p>
+              <h3>Vectors are projected</h3>
+              <p>Matrix multiplication turns those embeddings into new versions. A projection just means "a matrix-made view of the same vector" that helps with the next job.</p>
             </div>
           </div>
           <div class="response-step">
