@@ -644,6 +644,25 @@
     </section>
 
     <section class="grid two">
+      <article class="card">
+        <h2>Plain-English Vocabulary</h2>
+        <p><strong>Embedding:</strong> a word turned into a list of numbers so the model can work with it mathematically.</p>
+        <p><strong>Projection:</strong> multiplying a vector by a matrix to create a new version of that vector.</p>
+        <p><strong>Comparison:</strong> checking how strongly one token should relate to another token.</p>
+        <p><strong>Attention:</strong> the process that lets a token look at other tokens and decide which ones matter most right now.</p>
+        <p><strong>Feed-forward layer:</strong> another learned matrix-based transformation that updates each token after attention.</p>
+        <p><strong>Prediction:</strong> the model's guess for the next token to output.</p>
+      </article>
+
+      <article class="card">
+        <h2>How They Fit Together</h2>
+        <p>When you ask a question, each token first gets an <strong>embedding</strong>. The model then uses matrix multiplication to create new views of those embeddings. Those new views are called <strong>projections</strong>.</p>
+        <p>The model uses those projections to make <strong>comparisons</strong> between tokens. That creates <strong>attention</strong>, which tells the model what parts of the sentence matter most.</p>
+        <p>After that, a <strong>feed-forward layer</strong> remixes each token again. Finally, the model makes a <strong>prediction</strong> for the next token, adds it to the text, and repeats.</p>
+      </article>
+    </section>
+
+    <section class="grid two">
       <article class="card visual-card">
         <h2>Visual 1: Matrix Multiplication As A Mixing Machine</h2>
         <p>Read left to right. The input numbers flow into a weight matrix. Each output is created by mixing the inputs with a different recipe.</p>
@@ -770,21 +789,21 @@
     <section class="grid two">
       <article class="card visual-card">
         <h2>Visual 2: What A Transformer Layer Does</h2>
-        <p>One token vector enters a transformer block. Matrix multiplication first creates query, key, and value versions, then later transforms the result again in the feed-forward network.</p>
+        <p>One token vector enters a transformer block. Matrix multiplication first creates new projected versions of that token, then attention uses those versions to compare tokens, and finally the feed-forward layer remixes the result again.</p>
         <div class="attention-stage">
           <div class="attention-box">
             <h3>Input Embedding</h3>
-            <p class="tiny">A token like "Paris" becomes a vector of numbers.</p>
+            <p class="tiny">A token like "Paris" becomes a vector of numbers. That vector is the embedding.</p>
             <div class="beam"></div>
           </div>
           <div class="attention-box">
-            <h3>Q, K, V Projections</h3>
-            <p class="tiny">Three matrix multiplies create query, key, and value vectors.</p>
+            <h3>Projected Views</h3>
+            <p class="tiny">Matrix multiplication creates new versions of the token so the model can compare roles like asking, matching, and carrying information.</p>
             <div class="beam"></div>
           </div>
           <div class="attention-box">
             <h3>New Token State</h3>
-            <p class="tiny">The token is updated using attention plus another feed-forward matrix mix.</p>
+            <p class="tiny">The token is updated using attention first, then a feed-forward layer that does another learned matrix remix.</p>
             <div class="beam"></div>
           </div>
         </div>
@@ -792,7 +811,7 @@
 
       <article class="card visual-card">
         <h2>Visual 3: Tokens Looking At Each Other</h2>
-        <p>Attention lets each token decide which other tokens deserve focus. The same linear algebra machinery makes those comparisons possible.</p>
+        <p>Attention lets each token decide which other tokens deserve focus. The comparisons behind attention are built from projected embeddings and matrix multiplication.</p>
         <div class="storyboard">
           <div class="frame" data-step="1">
             <h3>User asks a question</h3>
@@ -821,8 +840,8 @@
         <h2>How LLMs Use The Same Idea</h2>
         <p>LLMs first convert each token into an embedding, which is just a vector of numbers. From there, the model repeatedly applies matrix multiplications inside transformer blocks.</p>
         <p>Two major places this happens:</p>
-        <p><strong>Attention:</strong> the model creates query, key, and value vectors using matrix multiplication, then compares tokens to decide what information matters.</p>
-        <p><strong>Feed-forward layers:</strong> after attention, more matrix multiplications transform each token representation again.</p>
+        <p><strong>Attention:</strong> the model creates projected versions of token embeddings, then compares tokens to decide what information matters.</p>
+        <p><strong>Feed-forward layers:</strong> after attention, more matrix multiplications transform each token representation again so it carries richer meaning into the next layer.</p>
         <p>So even though LLMs feel linguistic, their internal computation is mostly large-scale linear algebra.</p>
       </article>
 
@@ -836,7 +855,7 @@
     <section class="grid">
       <article class="card visual-card">
         <h2>Mini Animated Walkthrough: How An LLM Generates A Response</h2>
-        <p>Use this as a mental movie. Think of the model as repeatedly turning text into vectors, mixing those vectors with matrices, and then choosing the next token.</p>
+        <p>Use this as a mental movie. Think of the model as repeatedly turning text into embeddings, projecting those embeddings with matrices, comparing tokens through attention, remixing them with a feed-forward layer, and then predicting the next token.</p>
         <div class="cinema">
           <div class="screen">
             <div class="screen-stage">
@@ -897,36 +916,36 @@
           <div class="response-step">
             <div class="response-tag">Step 1</div>
             <div>
-              <h3>Your question becomes tokens</h3>
-              <p>For a prompt like "Why do airplanes fly?", the model splits the text into tokens. Each token becomes a vector so the transformer can process it numerically.</p>
+              <h3>Your question becomes tokens and embeddings</h3>
+              <p>For a prompt like "Why do airplanes fly?", the model splits the text into tokens. Each token then becomes an embedding, which is just a list of numbers representing that token in a learned way.</p>
             </div>
           </div>
           <div class="response-step">
             <div class="response-tag">Step 2</div>
             <div>
-              <h3>Embeddings are projected by matrices</h3>
-              <p>Matrix multiplication turns those token vectors into new versions used for attention. This is where the model starts asking: which words should pay attention to which other words?</p>
+              <h3>Embeddings are projected</h3>
+              <p>Matrix multiplication turns those embeddings into new versions. A projection just means "a matrix-made view of the same token" that helps with the next job.</p>
             </div>
           </div>
           <div class="response-step">
             <div class="response-tag">Step 3</div>
             <div>
-              <h3>Attention builds context</h3>
-              <p>The token for "fly" may look toward "airplanes" more strongly than toward "do". Those relationships are computed through projections and comparisons built from matrix operations.</p>
+              <h3>Comparisons create attention</h3>
+              <p>The model compares projected versions of tokens. The token for "fly" may look toward "airplanes" more strongly than toward "do". Those comparisons create attention, which tells the model what context matters most.</p>
             </div>
           </div>
           <div class="response-step">
             <div class="response-tag">Step 4</div>
             <div>
               <h3>Feed-forward layers remix the meaning</h3>
-              <p>After attention, more matrix multiplications transform each token representation into something richer and more useful for prediction.</p>
+              <p>After attention, the feed-forward layer applies another learned matrix transformation to each token. This helps the model build a richer internal meaning before it decides what comes next.</p>
             </div>
           </div>
           <div class="response-step">
             <div class="response-tag">Step 5</div>
             <div>
               <h3>The model predicts the next token</h3>
-              <p>At the end of the stack, the model produces scores over possible next tokens. It chooses one, appends it to the sequence, and repeats the whole process for the next token.</p>
+              <p>At the end of the stack, the model scores many possible next tokens. Prediction means choosing the most suitable next token, adding it to the sequence, and then repeating the entire cycle again.</p>
             </div>
           </div>
         </div>
