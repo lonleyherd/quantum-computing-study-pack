@@ -97,21 +97,6 @@
       font-size: 1.1rem;
     }
 
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .pill {
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.7);
-      color: var(--ink);
-    }
-
     .grid {
       display: grid;
       gap: 20px;
@@ -146,17 +131,6 @@
     .topic-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 16px 32px rgba(31, 42, 68, 0.12);
-    }
-
-    .topic-card span {
-      display: inline-block;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.92rem;
-      font-weight: 700;
     }
 
     .steps {
@@ -199,11 +173,6 @@
       <p class="eyebrow">Learning Library</p>
       <h1>Welcome To My Learning Hub</h1>
       <p class="lede">I built this space to explain topics the way I would want to learn them: in simple words, with practical examples. I hope you'll find this helpful.</p>
-      <div class="meta">
-        <span class="pill">Format: Multi-page</span>
-        <span class="pill">Best for: Topic-by-topic learning</span>
-        <span class="pill">Current topics: 2</span>
-      </div>
     </section>
 
     <section class="grid">
@@ -211,14 +180,12 @@
         <h2>Topics</h2>
         <div class="topic-list">
           <a class="topic-card" href="./topics/quantum-computing-basics/">
-            <span>Beginner Pack</span>
             <div>
               <h3>Quantum Computing Basics</h3>
               <p>Learn qubits, superposition, entanglement, interference, and the basic flow of a quantum circuit in one visual study page.</p>
             </div>
           </a>
           <a class="topic-card" href="./topics/matrix-multiplication-neural-networks-llms/">
-            <span>Math to AI</span>
             <div>
               <h3>Matrix Multiplication, Neural Networks, and LLMs</h3>
               <p>See how linear algebra turns into learned layers, why neural networks depend on weight matrices, and how LLMs scale that pattern up.</p>
